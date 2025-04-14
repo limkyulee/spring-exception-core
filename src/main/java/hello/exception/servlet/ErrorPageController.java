@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 
-// FIXME : 오류 페이지를 보여주기 위한 Controller
+// FIXME : 예외 처리용 Controller
 
 @Slf4j
 @Controller
