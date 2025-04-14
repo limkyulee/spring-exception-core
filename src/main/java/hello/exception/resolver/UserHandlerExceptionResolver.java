@@ -17,7 +17,6 @@ public class UserHandlerExceptionResolver implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
         Exception ex) {
-
         ObjectMapper objectMapper = new ObjectMapper();
 
         try{
@@ -26,7 +25,6 @@ public class UserHandlerExceptionResolver implements HandlerExceptionResolver {
                 String acceptHeader = request.getHeader("accept");
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-                log.info("acceptHeader : {}", acceptHeader);
                 if("application/json".equals(acceptHeader)){
                     Map<String, Object> errorResult = new HashMap<>();
                     errorResult.put("ex", ex.getClass());
@@ -36,8 +34,10 @@ public class UserHandlerExceptionResolver implements HandlerExceptionResolver {
                     String result = objectMapper.writeValueAsString(errorResult);
 
                     response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
+                    response.setCharacterEncoding("utf-8");
                     response.getWriter().write(result);
+
+                    return new ModelAndView();
                 }
             }else {
                 // TEXT/HTML | error/500.html 호출
