@@ -2,14 +2,13 @@ package hello.exception.api;
 
 import hello.exception.exception.BadRequestException;
 import hello.exception.exception.UserException;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -43,11 +42,16 @@ public class ApiExceptionController {
         throw new BadRequestException();
     }
 
-
     // PLUS : ResponseStatusException | 상태코드와 에러 메세지를 한번에 처리할 수 있는 Exception.
     @GetMapping("/api/response-status-ex2")
     public String responseStatusEx2() {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "error.bad", new IllegalArgumentException());
+    }
+
+    // PLUS : DefaultHandlerExceptionResolver | 스프링 내부 예외 처리
+    @GetMapping("/api/default-handler-ex")
+    public String defaultException(@RequestParam Integer data) {
+        return "ok";
     }
 
     @Data
